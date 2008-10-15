@@ -1,13 +1,11 @@
-WalkThroughCoverage
-===================
+rake test:walk_through
 
-Introduction goes here.
+The plugin does a "coverage walk through" -- it goes through the app/controllers, app/helpers, and app/views directories. For each file, it looks for the associated test file and runs a coverage test for that one test file against only that one application file. It puts each of the resulting files in RAILS_ROOT/walk_through, and also parses them to create an overall results file in RAILS_ROOT/walk_through/walk_through.html. This should give a more accurate reading of the actual state of your coverage. You can still get a bad reading if you write bad tests, but at least incidental coverage won't get included in your final numbers.
 
+This is still a little rough, but I wanted people to try it out. A couple of release notes.
 
-Example
-=======
-
-Example goes here.
-
-
-Copyright (c) 2008 [name of plugin creator], released under the MIT license
+The task uses Hpricot to create the aggregated result file.
+The task doesn't handle RSpec yet, though that would be a helpful extension.
+Each file expects a test file "#{filename}_test.rb", but the task doesn't care what directory the file lives in as long as it's under /test. If there's no test file (common for helpers), or if Rcov crashes (depressingly common), no walk_through file is generated, and the app file just doesn't show up in the result file. That's obviously not preferable. (However, even if one Rcov invocation crashes, the rest of the files are still tested)
+The result file is absurdly minimal and ugly.
+The task runs multiple Rcov instances -- it's kinda slow
