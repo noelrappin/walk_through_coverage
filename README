@@ -5,7 +5,11 @@ The plugin does a "coverage walk through" -- it goes through the app/controllers
 This is still a little rough, but I wanted people to try it out. A couple of release notes.
 
 The task uses Hpricot to create the aggregated result file.
+
 The task doesn't handle RSpec yet, though that would be a helpful extension.
+
 Each file expects a test file "#{filename}_test.rb", but the task doesn't care what directory the file lives in as long as it's under /test. If there's no test file (common for helpers), or if Rcov crashes (depressingly common), no walk_through file is generated, and the app file just doesn't show up in the result file. That's obviously not preferable. (However, even if one Rcov invocation crashes, the rest of the files are still tested)
+
 The result file is absurdly minimal and ugly.
+
 The task runs multiple Rcov instances -- it's kinda slow
